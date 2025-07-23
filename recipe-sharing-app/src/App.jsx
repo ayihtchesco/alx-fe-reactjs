@@ -4,11 +4,17 @@ import RecipeList from "./components/RecipeList";
 
 function App() {
   return (
-    <div style={{ padding: "20px", fontFamily: "Arial" }}>
-      <h1>Recipe Sharing App</h1>
+    <Router>
+      <div style={{ padding: "20px", fontFamily: "Arial" }}>
+        <h1>Recipe Sharing App</h1>
+        <RecipeList />
+      </div>
       <AddRecipeForm />
-      <RecipeList />
-    </div>
+      <Routes>
+        <Route path="/" element={<RecipeList />} />
+        <Route path="/recipe/:id" element={<RecipeDetails />} />
+      </Routes>
+    </Router>
   );
 }
 
