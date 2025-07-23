@@ -1,48 +1,31 @@
 // src/components/recipeStore.js
-import { create } from "zustand";
+import create from "zustand";
 
-export const useRecipeStore = create((set) => ({
+const useRecipeStore = create((set) => ({
   recipes: [],
-  filteredRecipes: [],
-  searchTerm: "",
+  favorites: [],
+  recommendations: [],
 
-  addRecipe: (newRecipe) =>
+  // Add to favorites
+  addFavorite: (recipeId) =>
     set((state) => ({
-      recipes: [...state.recipes, newRecipe],
-      filteredRecipes: [...state.recipes, newRecipe].filter((recipe) =>
-        recipe.title.toLowerCase().includes(state.searchTerm.toLowerCase())
-      ),
+      favorites: [...new Set([...state.favorites, recipeId])],
     })),
 
-  deleteRecipe: (id) =>
-    set((state) => {
-      const updated = state.recipes.filter((r) => r.id !== id);
-      return {
-        recipes: updated,
-        filteredRecipes: updated.filter((recipe) =>
-          recipe.title.toLowerCase().includes(state.searchTerm.toLowerCase())
-        ),
-      };
-    }),
+  // Remove from favorites
+  removeFavorite: (recipeId) =>
+    set((state) => ({
+      favorites: state.favorites.filter((id) => id !== recipeId),
+    })),
 
-  updateRecipe: (updatedRecipe) =>
+  // Generate recommendations (basic mock logic)
+  generateRecommendations: () =>
     set((state) => {
-      const updated = state.recipes.map((r) =>
-        r.id === updatedRecipe.id ? updatedRecipe : r
+      const recommended = state.recipes.filter(
+        (recipe) => state.favorites.includes(recipe.id) && Math.random() > 0.5
       );
-      return {
-        recipes: updated,
-        filteredRecipes: updated.filter((recipe) =>
-          recipe.title.toLowerCase().includes(state.searchTerm.toLowerCase())
-        ),
-      };
+      return { recommendations: recommended };
     }),
-
-  setSearchTerm: (term) =>
-    set((state) => ({
-      searchTerm: term,
-      filteredRecipes: state.recipes.filter((recipe) =>
-        recipe.title.toLowerCase().includes(term.toLowerCase())
-      ),
-    })),
 }));
+
+export default useRecipeStore;
