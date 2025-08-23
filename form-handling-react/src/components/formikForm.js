@@ -2,13 +2,14 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
+// Validation schema with Yup
 const validationSchema = Yup.object({
   username: Yup.string().required("Username is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),
   password: Yup.string().required("Password is required"),
 });
 
-const formikForm = () => {
+const FormikForm = () => {
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-xl">
       <h2 className="text-2xl font-bold mb-4 text-center">Register (Formik)</h2>
@@ -84,4 +85,4 @@ const formikForm = () => {
   );
 };
 
-export default formikForm;
+export default FormikForm;
