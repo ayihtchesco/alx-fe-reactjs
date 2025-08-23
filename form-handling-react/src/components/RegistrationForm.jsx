@@ -1,100 +1,72 @@
 import React, { useState } from "react";
 
-function RegistrationForm() {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
+const RegistrationForm = () => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [errors, setErrors] = useState({});
-
-  const validate = () => {
-    let newErrors = {};
-
-    if (!formData.username.trim()) newErrors.username = "Username is required";
-    if (!formData.email.trim()) newErrors.email = "Email is required";
-    if (!formData.password.trim()) newErrors.password = "Password is required";
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!validate()) return;
+    if (!username || !email || !password) {
+      alert("All fields are required!");
+      return;
+    }
 
-    // Mock API call
-    console.log("Submitting:", formData);
-    alert("User registered successfully!");
+    console.log("Form submitted:", { username, email, password });
+    // You can later send this to API
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 border rounded-lg shadow">
-      <h2 className="text-2xl font-bold mb-4">Register</h2>
+    <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-xl">
+      <h2 className="text-2xl font-bold mb-4 text-center">Register</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Username */}
         <div>
-          <label className="block">Username</label>
+          <label className="block text-sm font-medium mb-1">Username</label>
           <input
             type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            className="border w-full p-2 rounded"
+            value={username} // ✅ controlled input
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter username"
           />
-          {errors.username && (
-            <p className="text-red-500 text-sm">{errors.username}</p>
-          )}
         </div>
 
         {/* Email */}
         <div>
-          <label className="block">Email</label>
+          <label className="block text-sm font-medium mb-1">Email</label>
           <input
             type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="border w-full p-2 rounded"
+            value={email} // ✅ controlled input
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter email"
           />
-          {errors.email && (
-            <p className="text-red-500 text-sm">{errors.email}</p>
-          )}
         </div>
 
         {/* Password */}
         <div>
-          <label className="block">Password</label>
+          <label className="block text-sm font-medium mb-1">Password</label>
           <input
             type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            className="border w-full p-2 rounded"
+            value={password} // ✅ controlled input
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter password"
           />
-          {errors.password && (
-            <p className="text-red-500 text-sm">{errors.password}</p>
-          )}
         </div>
 
+        {/* Submit Button */}
         <button
           type="submit"
-          className="bg-blue-600 text-white w-full py-2 rounded hover:bg-blue-700"
+          className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition"
         >
           Register
         </button>
       </form>
     </div>
   );
-}
+};
 
 export default RegistrationForm;
