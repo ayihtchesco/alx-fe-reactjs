@@ -12,33 +12,21 @@ import ProfileSettings from "./components/ProfileSettings";
 import BlogPost from "./components/BlogPost";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+import React from "react";
+
 function App() {
   return (
     <Router>
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
+      <div>
+        <h1>Advanced Routing Demo</h1>
+        <nav>
+          <Link to="/profile">Profile</Link>
+        </nav>
 
-        {/* Dynamic Route for Blog */}
-        <Route path="/blog/:postId" element={<BlogPost />} />
-
-        {/* Protected Route with Nested Children */}
-        <Route
-          path="/profile/*"
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          }
-        >
-          <Route path="details" element={<ProfileDetails />} />
-          <Route path="settings" element={<ProfileSettings />} />
-        </Route>
-
-        {/* Fallback redirect */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+        <Routes>
+          <Route path="/profile/*" element={<Profile />} />
+        </Routes>
+      </div>
     </Router>
   );
 }

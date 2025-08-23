@@ -1,7 +1,11 @@
-const ProfileDetails = () => (
-  <div>
-    <h2 className="text-lg font-semibold">Profile Details</h2>
-    <p>Here are your profile details...</p>
-  </div>
-);
+import React from "react";
+
+const ProfileDetails = () => {
+  return (
+    <div>
+      <h3>Profile Details Section</h3>
+    </div>
+  );
+};
+
 export default ProfileDetails;
